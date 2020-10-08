@@ -5,6 +5,7 @@ node('master')
   try {
     stage('print root parent build num')
   {
+      error "failing third job"
       println "This is Third Job! Build num of root parent: \"${rootJobBuildNum}\""
   }
  }catch (Exception  err)
