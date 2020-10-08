@@ -24,12 +24,12 @@ There are many ways to install jenkins (in docker compose, or with a web server 
 # some points:
 - As said, Jenkins installed using chocolate package manager, as requeted in step 1:
 	- a. it's  accessible  from http://localhost (80)
-	- b. Jenkins installation includes only 1 master server without slaves nodes so to perform multiple parallel job run we need to set bigger number of executors on the master (set to 10). (in prod env we should use slaves ofcorse)
+	- b. Jenkins installation includes only 1 master server without slaves nodes so to perform multiple parallel job run we need to set bigger number of executors on the master (set to 10). (in prod env we should use slaves of course)
 - since we are on windows server, for simplicity I wrote the script using BATCH/cmd, script name is etoro-script.bat:
 	- the script accepts  2 arguments, job name and build number
 	- to fail only on every 3 builds I used modulu function BUILD_NUM % 3 == 0  (this ensures that only 3,6,9,12... builds are success)
 - the requested jobs are called FirstJob, SecondJob, ThirdJob
-- all the jobs are written in groovy scripted pipeline style and all of them are fetched from github (pipeline from SCM) for backup and single source of truth
+- all the jobs are written in groovy scripted pipeline style and all of them are fetched from github (pipeline from SCM, using SSH keys configured manually) for easier maintain, backup and single source of truth
 
 # first job:
 1) cleaning workspace and checkout SCM github repo to get the script
