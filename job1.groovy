@@ -9,10 +9,15 @@ node('master')
     stage('next job')
   {
       bat 'dir'
-       retry(3) {
-      build quietPeriod: 0, job: 'SecondJob', parameters: [[$class: 'StringParameterValue', name: 'parentJobName', value: "${JOB_NAME}" ],
+      retry(3) {
+        try {
+          build quietPeriod: 0, job: 'SecondJob', parameters: [[$class: 'StringParameterValue', name: 'parentJobName', value: "${JOB_NAME}" ],
       [$class: 'StringParameterValue', name: 'parentJobBuildNum', value: "${BUILD_NUMBER}" ]]
-       }
+         }catch (Exception e)
+         {
+          error 'child JOB Failed!'
+         }
+      }
   }
   }catch (Exception  err)
 {
